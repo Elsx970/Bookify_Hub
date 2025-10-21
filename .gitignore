@@ -1,0 +1,15 @@
+# Laravel
+backend/vendor
+backend/.env
+backend/storage/*.key
+backend/public/storage
+
+# React
+frontend/node_modules
+frontend/build
+frontend/.env
+
+# Common
+.DS_Store
+.idea
+.vscode
