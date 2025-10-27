@@ -37,7 +37,7 @@ export default function AdminBooksEdit({ bookId }: PageProps) {
     const getCsrfToken = () => {
         const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
         if (!token) {
-            console.error('❌ CSRF token not found in meta tag!');
+            console.error('CSRF token not found in meta tag!');
         }
         return token || '';
     };
@@ -120,7 +120,7 @@ export default function AdminBooksEdit({ bookId }: PageProps) {
                 toast.error('Please upload an image file');
                 return;
             }
-            console.log('🖼️ Image selected for edit:', {
+            console.log('Image selected for edit:', {
                 name: file.name,
                 size: (file.size / 1024).toFixed(2) + ' KB',
                 type: file.type
@@ -145,19 +145,19 @@ export default function AdminBooksEdit({ bookId }: PageProps) {
                 credentials: 'include',
             });
             
-            console.log('🔍 Google Books API Response Status:', response.status);
+            console.log('Google Books API Response Status:', response.status);
             
             if (!response.ok) {
-                console.error('❌ Response not OK:', response.status, response.statusText);
+                console.error('Response not OK:', response.status, response.statusText);
                 const errorText = await response.text();
-                console.error('❌ Error body:', errorText);
+                console.error('Error body:', errorText);
                 toast.error(`API Error: ${response.status} ${response.statusText}`);
                 setGoogleSearching(false);
                 return;
             }
             
             const data = await response.json();
-            console.log('📦 Google Books API Data:', data);
+            console.log('Google Books API Data:', data);
             
             if (data.success) {
                 setGoogleSearchResults(data.results || []);
@@ -167,11 +167,11 @@ export default function AdminBooksEdit({ bookId }: PageProps) {
                     toast.success(`Found ${data.results.length} books!`);
                 }
             } else {
-                console.error('❌ API returned success: false');
+                console.error('API returned success: false');
                 toast.error('Failed to search Google Books');
             }
         } catch (error) {
-            console.error('💥 Google Books search error:', error);
+            console.error('Google Books search error:', error);
             toast.error('Failed to search Google Books');
         } finally {
             setGoogleSearching(false);
@@ -195,7 +195,7 @@ export default function AdminBooksEdit({ bookId }: PageProps) {
                 toast.info('Downloading cover image...');
                 
                 const csrfToken = getCsrfToken();
-                console.log('🔑 Using CSRF Token:', csrfToken ? 'Found' : 'NOT FOUND');
+                console.log('Using CSRF Token:', csrfToken ? 'Found' : 'NOT FOUND');
                 
                 const response = await fetch('/api/admin/google-books/download-cover', {
                     method: 'POST',
@@ -209,35 +209,35 @@ export default function AdminBooksEdit({ bookId }: PageProps) {
                     body: JSON.stringify({ url: googleBook.cover_image_url }),
                 });
                 
-                console.log('📥 Cover download response status:', response.status);
+                console.log('Cover download response status:', response.status);
                 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error('❌ Cover download failed:', response.status, errorText);
+                    console.error('Cover download failed:', response.status, errorText);
                     toast.warning('Book data imported, but failed to download cover image');
                     return;
                 }
                 
                 const data = await response.json();
-                console.log('✅ Cover download success:', data);
-                console.log('🖼️ Cover URL:', data.url);
+                console.log('Cover download success:', data);
+                console.log('Cover URL:', data.url);
                 
                 if (data.success && data.url && data.filename) {
                     setPreview(data.url);
                     setGoogleBooksFilename(data.filename); // Store filename for form submission
-                    console.log('✅ Preview URL set to:', data.url);
-                    console.log('✅ Google Books filename:', data.filename);
-                    toast.success('Book data imported from Google Books! 🎉');
+                    console.log('Preview URL set to:', data.url);
+                    console.log('Google Books filename:', data.filename);
+                    toast.success('Book data imported from Google Books!');
                 } else {
-                    console.error('❌ No URL in response:', data);
+                    console.error('No URL in response:', data);
                     toast.warning('Book data imported, but failed to download cover image');
                 }
             } catch (error) {
-                console.error('💥 Cover download error:', error);
+                console.error('Cover download error:', error);
                 toast.warning('Book data imported, but failed to download cover image');
             }
         } else {
-            toast.success('Book data imported from Google Books! 🎉');
+            toast.success('Book data imported from Google Books!');
         }
 
         // Close modal
@@ -279,10 +279,10 @@ export default function AdminBooksEdit({ bookId }: PageProps) {
         // Add Google Books cover if available
         if (!formData.cover_image && googleBooksFilename) {
             formDataToSend.append('google_books_cover', googleBooksFilename);
-            console.log('📚 Using Google Books cover:', googleBooksFilename);
+            console.log('Using Google Books cover:', googleBooksFilename);
         }
 
-        console.log('📤 Sending update to backend...');
+        console.log('Sending update to backend...');
 
         try {
             const response = await fetch(`/api/admin/books/${id}`, {
@@ -295,23 +295,23 @@ export default function AdminBooksEdit({ bookId }: PageProps) {
                 credentials: 'include',
             });
 
-            console.log('📥 Response status:', response.status, response.statusText);
+            console.log('Response status:', response.status, response.statusText);
 
             const data = await response.json();
-            console.log('✅ Update response:', data);
+            console.log('Update response:', data);
 
             if (response.ok) {
-                toast.success('Book updated successfully! 📚');
+                toast.success('Book updated successfully!');
                 setTimeout(() => {
                 router.visit('/admin/books');
                 }, 500);
             } else {
-                console.error('❌ Update error:', data);
+                console.error('Update error:', data);
                 setError(data.message || 'Error updating book');
                 toast.error(data.message || 'Failed to update book');
             }
         } catch (error) {
-            console.error('💥 Error updating book:', error);
+            console.error('Error updating book:', error);
             setError('Error updating book');
             toast.error('An error occurred while updating the book');
         } finally {

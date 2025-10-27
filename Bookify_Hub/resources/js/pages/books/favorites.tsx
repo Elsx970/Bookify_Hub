@@ -39,11 +39,11 @@ export default function BooksFavorites() {
             }
             
             const data = await response.json();
-            console.log('📦 Favorites response:', data);
+            console.log('Favorites response:', data);
             
             // Backend returns: { success: true, total: X, favorites: { data: [...], ...pagination } }
             const favoriteBooks = data.favorites?.data || data.data || [];
-            console.log('📚 Favorite books:', favoriteBooks);
+            console.log('Favorite books:', favoriteBooks);
             
             setFavorites(favoriteBooks);
         } catch (error) {

@@ -69,7 +69,7 @@ export default function Welcome() {
                             className="text-center max-w-4xl mx-auto"
                         >
                             <Badge className="mb-4 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-500/30 text-purple-200" variant="secondary">
-                                📚 Your Digital Library Companion
+                                Your Digital Library Companion
                             </Badge>
                             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
                                 Discover Your Next

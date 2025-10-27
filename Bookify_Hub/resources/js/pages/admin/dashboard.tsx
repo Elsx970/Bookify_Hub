@@ -98,7 +98,7 @@ export default function AdminDashboard() {
                                     <CardHeader>
                                         <div className="flex items-start justify-between">
                                             <div>
-                                                <CardTitle className="text-2xl mb-2">📚 Books Management</CardTitle>
+                                                <CardTitle className="text-2xl mb-2">Books Management</CardTitle>
                                                 <p className="text-sm text-muted-foreground">
                                                     Add, edit, and manage all books in the library
                                                 </p>

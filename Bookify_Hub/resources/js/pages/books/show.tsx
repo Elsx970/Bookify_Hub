@@ -144,11 +144,11 @@ export default function BooksShow({ id: propId }: PageProps) {
     const toggleFavorite = async () => {
         setFavoriteLoading(true);
         try {
-            console.log('🔄 Toggling favorite for book:', id);
+            console.log('Toggling favorite for book:', id);
             
             // Get fresh CSRF token from meta tag
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-            console.log('🔑 CSRF Token:', csrfToken ? 'Found' : 'Missing');
+            console.log('CSRF Token:', csrfToken ? 'Found' : 'Missing');
             
             if (!csrfToken) {
                 toast.error('Security token missing. Please refresh the page.');
@@ -167,7 +167,7 @@ export default function BooksShow({ id: propId }: PageProps) {
                 credentials: 'include',
             });
             
-            console.log('📥 Response status:', response.status);
+            console.log('Response status:', response.status);
             
             if (response.status === 419) {
                 toast.error('Session expired. Please refresh the page.');
@@ -176,22 +176,22 @@ export default function BooksShow({ id: propId }: PageProps) {
             }
             
             const data = await response.json();
-            console.log('📦 Response data:', data);
+            console.log('Response data:', data);
             
             if (response.ok) {
                 setIsFavorite(data.is_favorited);
                 
                 if (data.is_favorited) {
-                    toast.success('Added to favorites! ❤️');
+                    toast.success('Added to favorites!');
                 } else {
                     toast.info('Removed from favorites');
                 }
             } else {
-                console.error('❌ Failed response:', data);
+                console.error('Failed response:', data);
                 toast.error(data.message || 'Failed to update favorite status');
             }
         } catch (error) {
-            console.error('❌ Error toggling favorite:', error);
+            console.error('Error toggling favorite:', error);
             toast.error('Failed to update favorite status');
         } finally {
             setFavoriteLoading(false);
@@ -238,7 +238,7 @@ export default function BooksShow({ id: propId }: PageProps) {
                 setShowReviewForm(false);
                 fetchUserReview();
                 fetchBook();
-                toast.success(userReview ? 'Review updated successfully! ⭐' : 'Review added successfully! ⭐');
+                toast.success(userReview ? 'Review updated successfully!' : 'Review added successfully!');
             } else {
                 const data = await response.json();
                 toast.error(data.message || 'Failed to submit review');
@@ -377,7 +377,7 @@ export default function BooksShow({ id: propId }: PageProps) {
                                             variant={isFavorite ? 'default' : 'outline'}
                                         >
                                             <Heart className={`h-5 w-5 mr-2 ${isFavorite ? 'fill-current animate-pulse' : ''}`} />
-                                            {favoriteLoading ? 'Loading...' : (isFavorite ? 'Favorited ❤️' : 'Add to Favorites')}
+                                            {favoriteLoading ? 'Loading...' : (isFavorite ? 'Favorited' : 'Add to Favorites')}
                                         </Button>
                                     </div>
                                 )}
@@ -436,7 +436,7 @@ export default function BooksShow({ id: propId }: PageProps) {
                                             onClick={() => setShowReviewForm(true)}
                                             className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
                                         >
-                                            ⭐ Write a Review
+                                            Write a Review
                                         </Button>
                                     )}
 

@@ -43,11 +43,11 @@ export default function MyReviews() {
             }
             
             const data = await response.json();
-            console.log('📦 My Reviews response:', data);
+            console.log('My Reviews response:', data);
             
             // Backend returns: { success: true, reviews: { data: [...], ...pagination } }
             const myReviews = data.reviews?.data || data.data || [];
-            console.log('📝 My reviews:', myReviews);
+            console.log('My reviews:', myReviews);
             
             setReviews(myReviews);
         } catch (error) {

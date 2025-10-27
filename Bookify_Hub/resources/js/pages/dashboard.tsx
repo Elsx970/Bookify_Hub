@@ -46,7 +46,7 @@ export default function Dashboard() {
             fetch('/api/books?per_page=8&sort=rating_high&min_rating=4.5').then((res) => res.json()),
         ])
             .then(([allBooksResponse, recentResponse, topRatedResponse]) => {
-                console.log('🔍 API Response:', { allBooksResponse, recentResponse, topRatedResponse });
+                console.log('API Response:', { allBooksResponse, recentResponse, topRatedResponse });
                 
                 // Handle different response structures
                 const allBooksArray = Array.isArray(allBooksResponse) 
@@ -59,7 +59,7 @@ export default function Dashboard() {
                     ? topRatedResponse 
                     : (topRatedResponse.data || topRatedResponse.books || []);
                 
-                console.log('📚 Books Arrays:', { allBooksArray, recentArray, topRatedArray });
+                console.log('Books Arrays:', { allBooksArray, recentArray, topRatedArray });
 
                 setFeaturedBooks(allBooksArray.slice(0, 8));
                 setRecentBooks(recentArray.slice(0, 8));
